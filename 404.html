@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>请访问新站点 https://vlcnml.xyz/index.php</title>
+	</head>
+	<body>
+		<p>跳转中，访问新域名站点<a href="https://vlcnml.xyz/index.php" target="_blank">https://cnmrvl.xyz</a></p>
+	</body>
+	<script src="http://cdn.bootcss.com/purl/2.3.1/purl.min.js"></script>
+	<script>
+		var url = purl();
+		if (url.attr('host') == 'cnmrvl.xyz') {
+		    var old_url = url.attr('source');
+		    var new_url = old_url.replace('cnmrvl.xyz', "vlcnml.xyz");
+		    window.location.replace(new_url); 
+		}else if (url.attr('host') == 'www.cnmrvl.xyz') {
+		    var old_url = url.attr('source');
+		    var new_url = old_url.replace('www.cnmrvl.xyz', "vlcnml.xyz");
+		    window.location.replace(new_url);
+		}else {
+		    window.location.href="https://vlcnml.xyz";
+		}
+	</script>
+</html>
