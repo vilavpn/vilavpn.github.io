@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>请访问新站点 https://vilanet.site/index.php</title>
-	</head>
-	<body>
-		<p>跳转中，访问新域名站点<a href="https://vilanet.site/index.php" target="_blank">https://cnmrvl.xyz</a></p>
-	</body>
-	<script src="http://cdn.bootcss.com/purl/2.3.1/purl.min.js"></script>
-	<script>
-		var url = purl();
-		if (url.attr('host') == 'cnmrvl.xyz') {
-		    var old_url = url.attr('source');
-		    var new_url = old_url.replace('cnmrvl.xyz', "vlcnml.xyz");
-		    window.location.replace(new_url); 
-		}else if (url.attr('host') == 'www.cnmrvl.xyz') {
-		    var old_url = url.attr('source');
-		    var new_url = old_url.replace('www.cnmrvl.xyz', "vlcnml.xyz");
-		    window.location.replace(new_url);
-		}else {
-		    window.location.href="https://vlcnml.xyz";
-		}
-	</script>
+    <head>
+        <meta charset="UTF-8">
+        <title>请访问新站点</title>
+    </head>
+    <body>
+        <p>跳转中，访问新域名站点</p> <!-- You might want to update the URL displayed here too -->
+    </body>
+    <script src="http://cdn.bootcss.com/purl/2.3.1/purl.min.js"></script>
+    <script>
+        (function() {
+            // Define your old and new URLs here
+            var oldURLs = ['cnmrvl.xyz', 'www.cnmrvl.xyz']; // example of old URLs
+            var newURL = "vilanet.site"; // example of new URL
+
+            var currentUrl = purl().attr('source');
+            var currentHost = purl().attr('host');
+
+            // Function to replace the domain in the current URL with the new one
+            function getRedirectUrl(url, newDomain) {
+                for (var i = 0; i < oldURLs.length; i++) {
+                    if (url.includes(oldURLs[i])) {
+                        return url.replace(oldURLs[i], newDomain);
+                    }
+                }
+                // If none of the old domains are found, return the original URL
+                return url;
+            }
+
+            // Redirect to the new domain if the current one matches any in the oldURLs list
+            if (oldURLs.includes(currentHost)) {
+                window.location.replace(getRedirectUrl(currentUrl, newURL));
+            } else {
+                // If the current domain doesn't match any old URL, redirect to the new URL's homepage
+                window.location.href = "https://" + newURL;
+            }
+        })();
+    </script>
 </html>
