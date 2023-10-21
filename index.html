@@ -1,26 +1,67 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en"> <!-- Set default language here -->
 <head>
-<body>
-<br>
-<h1>请收藏本页以便下次访问~ 本页地址： <a href="https://vilavpn.github.io/" target="_blank" title="">https://vilavpn.github.io/</a></h1>
-<hr width="100%" align = "left" />
-<h1>官方Twitter：<a href="https://twitter.com/vilavpn" target="_blank" title="">https://twitter.com/vilavpn</a></h1>
+  <meta charset="UTF-8">
+  <title>Multi-language Page</title>
+  <script>
+    // Translations
+    var translations = {
+      en: {
+        bookmark: "Please bookmark this page for future access~",
+        redirecting: "Redirecting in ",
+        seconds: " seconds..."
+      },
+      cn: {
+        bookmark: "请收藏本页以便下次访问~",
+        redirecting: "秒钟后系统自动跳转, 请收藏本页以便下次访问~",
+        seconds: "" // Chinese version has different structure, adjusting accordingly
+      },
+      jp: {
+        bookmark: "次回のアクセスのためにこのページをブックマークしてください〜",
+        redirecting: "リダイレクト中... ",
+        seconds: " 秒後"
+      }
+    };
 
-<h2><div id="countdown"></div></h2>
-
-<script language="javascript" type="text/javascript">
-    var time = 12
-    var contain = document.getElementById("countdown")
-    contain.innerHTML = time.toString() + "秒钟后系统自动跳转, 请收藏本页以便下次访问~"
-    function updateTime(){
-        time = time-1
-        if(time>=0){ contain.innerHTML = time.toString() + "秒钟后系统自动跳转, 请收藏本页以便下次访问~" }
-        else{ contain.innerHTML = "正在跳转。。。" }
+    // Function to simulate getting the preferred language
+    function getPreferredLanguage() {
+      // In a real scenario, you might get this information from the browser or user's profile settings
+      return 'en'; // Defaulting to English for the sake of this example
     }
-    setInterval("updateTime()",1000);
-    setTimeout("javascript:location.href='https://vilanet.site'", time*1000);
-</script>
+
+    function applyTranslations(lang) {
+      var elements = document.querySelectorAll('[data-translate]');
+
+      elements.forEach(function(element) {
+        var key = element.getAttribute('data-translate');
+        element.textContent = translations[lang][key];
+      });
+    }
+
+    function updateTime(lang) {
+      var time = 12; // Redirect after 12 seconds
+      var contain = document.getElementById("countdown");
+      contain.textContent = translations[lang]["redirecting"] + time.toString() + translations[lang]["seconds"];
+
+      var countdown = setInterval(function() {
+        time = time - 1;
+        if (time >= 0) {
+          contain.textContent = translations[lang]["redirecting"] + time.toString() + translations[lang]["seconds"];
+        } else {
+          contain.textContent = translations[lang]["redirecting"];
+          clearInterval(countdown);
+          // Redirect to the desired URL
+          window.location.href = 'https://vilanet.site';
+        }
+      }, 1000);
+    }
+  </script>
+</head>
+<body onload="applyTranslations(getPreferredLanguage()); updateTime(getPreferredLanguage());">
+  <br>
+  <h1 data-translate="bookmark"></h1>
+  <hr width="100%" align="left" />
+  <h1>Official Twitter：<a href="https://twitter.com/vilavpn" target="_blank" title="">https://twitter.com/vilavpn</a></h1>
+  <h2><div id="countdown" data-translate="redirecting"></div></h2>
 </body>
 </html>
