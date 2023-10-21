@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>请访问新站点</title>
-    </head>
-    <body>
-        <p>跳转中，访问新域名站点</p> <!-- You might want to update the URL displayed here too -->
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title data-translate="title">请访问新站点</title>
+    <script>
+        // Translations for different languages
+        var translations = {
+            en: {
+                title: "Visit the New Site",
+                message: "Redirecting, please visit the new domain site"
+            },
+            cn: {
+                title: "请访问新站点",
+                message: "跳转中，访问新域名站点"
+            },
+            jp: {
+                title: "新しいサイトを訪問してください",
+                message: "リダイレクト中、新しいドメインサイトを訪問してください"
+            }
+        };
+
+        // Function to simulate getting the preferred language
+        function getPreferredLanguage() {
+            // In a real scenario, you might get this information from the browser or user's profile settings
+            return 'cn'; // Defaulting to Chinese for the sake of this example
+        }
+
+        function applyTranslations(lang) {
+            var elements = document.querySelectorAll('[data-translate]');
+
+            elements.forEach(function(element) {
+                var key = element.getAttribute('data-translate');
+                element.textContent = translations[lang][key];
+                if (element.tagName === 'TITLE') {
+                    document.title = translations[lang][key]; // Special handling for the title tag
+                }
+            });
+        }
+    </script>
+</head>
+<body onload="applyTranslations(getPreferredLanguage());">
+    <p data-translate="message">跳转中，访问新域名站点</p> <!-- Message will be replaced based on language selection -->
+    
+    <!-- Existing redirection script -->
     <script src="http://cdn.bootcss.com/purl/2.3.1/purl.min.js"></script>
     <script>
         (function() {
@@ -37,4 +73,5 @@
             }
         })();
     </script>
+</body>
 </html>
