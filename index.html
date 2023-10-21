@@ -1,67 +1,75 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Set default language here -->
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Multi-language Page</title>
-  <script>
-    // Translations
-    var translations = {
-      en: {
-        bookmark: "Please bookmark this page for future access~",
-        redirecting: "Redirecting in ",
-        seconds: " seconds..."
-      },
-      cn: {
-        bookmark: "请收藏本页以便下次访问~",
-        redirecting: "秒钟后系统自动跳转, 请收藏本页以便下次访问~",
-        seconds: "" // Chinese version has different structure, adjusting accordingly
-      },
-      jp: {
-        bookmark: "次回のアクセスのためにこのページをブックマークしてください〜",
-        redirecting: "リダイレクト中... ",
-        seconds: " 秒後"
-      }
-    };
+    <meta charset="UTF-8">
+    <title>Multi-language Page</title>
+    <script>
+        // Translations
+        var translations = {
+            en: {
+                bookmark: "Please bookmark this page for future access~",
+                redirecting: "Redirecting in ",
+                seconds: " seconds..."
+            },
+            cn: {
+                bookmark: "请收藏本页以便下次访问~",
+                redirecting: "秒钟后系统自动跳转, 请收藏本页以便下次访问~",
+                seconds: "" // Chinese version has different structure, adjusting accordingly
+            },
+            jp: {
+                bookmark: "次回のアクセスのためにこのページをブックマークしてください〜",
+                redirecting: "リダイレクト中... ",
+                seconds: " 秒後"
+            }
+        };
 
-    // Function to simulate getting the preferred language
-    function getPreferredLanguage() {
-      // In a real scenario, you might get this information from the browser or user's profile settings
-      return 'en'; // Defaulting to English for the sake of this example
-    }
-
-    function applyTranslations(lang) {
-      var elements = document.querySelectorAll('[data-translate]');
-
-      elements.forEach(function(element) {
-        var key = element.getAttribute('data-translate');
-        element.textContent = translations[lang][key];
-      });
-    }
-
-    function updateTime(lang) {
-      var time = 12; // Redirect after 12 seconds
-      var contain = document.getElementById("countdown");
-      contain.textContent = translations[lang]["redirecting"] + time.toString() + translations[lang]["seconds"];
-
-      var countdown = setInterval(function() {
-        time = time - 1;
-        if (time >= 0) {
-          contain.textContent = translations[lang]["redirecting"] + time.toString() + translations[lang]["seconds"];
-        } else {
-          contain.textContent = translations[lang]["redirecting"];
-          clearInterval(countdown);
-          // Redirect to the desired URL
-          window.location.href = 'https://vilanet.site';
+        // Function to simulate getting the preferred language
+        function getPreferredLanguage() {
+            // In a real scenario, you might get this information from the browser or user's profile settings
+            return 'en'; // Defaulting to English for the sake of this example
         }
-      }, 1000);
-    }
-  </script>
+
+        function applyTranslations(lang) {
+            var elements = document.querySelectorAll('[data-translate]');
+
+            elements.forEach(function(element) {
+                var key = element.getAttribute('data-translate');
+                element.textContent = translations[lang][key];
+            });
+        }
+
+        function startCountdown(lang) {
+            var time = 12; // Redirect after 12 seconds
+            var container = document.getElementById("countdown");
+
+            // Initial display
+            container.textContent = translations[lang]["redirecting"] + time + translations[lang]["seconds"];
+
+            var countdown = setInterval(function() {
+                time--;
+                if (time >= 0) {
+                    container.textContent = translations[lang]["redirecting"] + time + translations[lang]["seconds"];
+                } else {
+                    clearInterval(countdown);
+                    container.textContent = "Redirecting..."; // This text can also be localized
+                    window.location.href = 'https://vilanet.site'; // Redirect URL
+                }
+            }, 1000);
+        }
+
+        // Run on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            var userLang = getPreferredLanguage();
+            applyTranslations(userLang);
+            startCountdown(userLang);
+        });
+    </script>
 </head>
-<body onload="applyTranslations(getPreferredLanguage()); updateTime(getPreferredLanguage());">
-  <br>
-  <h1 data-translate="bookmark"></h1>
-  <hr width="100%" align="left" />
-  <h1>Official Twitter：<a href="https://twitter.com/vilavpn" target="_blank" title="">https://twitter.com/vilavpn</a></h1>
-  <h2><div id="countdown" data-translate="redirecting"></div></h2>
+<body>
+    <br>
+    <h1 data-translate="bookmark"></h1>
+    <hr width="100%" align="left" />
+    <h1>Official Twitter：<a href="https://twitter.com/vilavpn" target="_blank">https://twitter.com/vilavpn</a></h1>
+    <h2><div id="countdown"></div></h2>
 </body>
 </html>
